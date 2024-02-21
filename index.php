@@ -1,3 +1,27 @@
+<?php
+$password_length = $_GET['password'] ?? '';
+$random_password = '';
+function generate_random_password($length){
+  // Stringa contenente tutti i caratteri per la password
+  $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+{}[]|;:,.<>?';
+  $password = '';
+  // Ottengo la lunghezza della stringa per iterare
+  $characters_length = strlen($characters);
+  // Genera la password casuale
+  for ($i = 0; $i < $length; $i++) {
+    // Ottengo un carattere casuale e lo concateno alla stringa
+    $password .= $characters[rand(0, $characters_length - 1)];
+  }
+  // Restituisci la password generata
+  return $password;
+}
+  if (isset($password_length) && is_numeric($password_length) && $password_length > 0) {
+    // Invoco la funziona se il valore del GET non è vuoto e la memorizzo in una variabile
+    $random_password = generate_random_password($password_length);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,13 +43,14 @@
   <main>
     <div class="container p-3">
       <h5 class="text-center mb-3">Scrivi la lunghezza della password da generare.</h5>
-      <form action="" name="password">
+      <form action=""  method="GET">
         <div class="mb-3 d-flex justify-content-center align-items-center gap-3">
           <label for="exampleInputEmail1" class="form-label">Lunghezza password:</label>
-          <input type="number" class="form-control form-width">
+          <input type="number" class="form-control form-width" name="password">
           <button type="submit" class="btn btn-primary">Genera</button>
         </div>
       </form>
+      <?= $random_password ?>
     </div>
   </main>
 </body>
